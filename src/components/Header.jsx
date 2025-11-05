@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { useCart } from '../context/CartContext';
 
 
 
@@ -18,45 +19,50 @@ const CloseIcon = () => (
 );
 
 
-export default function Header(cartCount) {
+export default function Header() {
   const navigate = useNavigate();
   const [isOpen, setIsOpen] = useState(false);
- console.log("header :", cartCount.cartCount)
- const count = cartCount.cartCount;
+  const { cartBooks } = useCart();
+  const count = cartBooks.length;
+
   return (
    <nav className="bg-pink-50   shadow-md sticky top-0 z-50 rounded-xl w-full overflow-x-hidden">
   <div className="w-screen mx-auto px-4 sm:px-6 lg:px-8">
     <div className="flex  items-center h-16 gap-[100px]">
       {/* Logo */}
       <div className="flex items-center">
-        <a href="#" className="text-2xl font-bold text-pink-600">
+        <Link to="/" className="text-2xl font-bold text-pink-600">
           📚 Bookworm Babies
-        </a>
+        </Link>
       </div>
 
       {/* Desktop Navigation */}
       <div className="hidden md:flex md:items-center md:space-x-8">
-        <a href="#" className="text-gray-700 hover:text-pink-600 px-3 py-2 rounded-md text-sm font-medium transition-colors duration-200">Home</a>
-        <a href="#" className="text-gray-700 hover:text-pink-600 px-3 py-2 rounded-md text-sm font-medium transition-colors duration-200">Shop by Age</a>
-        <a href="#" className="text-gray-700 hover:text-pink-600 px-3 py-2 rounded-md text-sm font-medium transition-colors duration-200">Bestsellers</a>
-        <a href="#" className="text-gray-700 hover:text-pink-600 px-3 py-2 rounded-md text-sm font-medium transition-colors duration-200">About Us</a>
+        <Link to="/" className="text-gray-700 hover:text-pink-600 px-3 py-2 rounded-md text-sm font-medium transition-colors duration-200">Home</Link>
+        <Link to="/" className="text-gray-700 hover:text-pink-600 px-3 py-2 rounded-md text-sm font-medium transition-colors duration-200">Shop by Age</Link>
+        <Link to="/" className="text-gray-700 hover:text-pink-600 px-3 py-2 rounded-md text-sm font-medium transition-colors duration-200">Bestsellers</Link>
+        <Link to="/" className="text-gray-700 hover:text-pink-600 px-3 py-2 rounded-md text-sm font-medium transition-colors duration-200">About Us</Link>
       </div>
 
-      <div className='hidden md:flex md:items-center '>
-         <button onClick={() => navigate("/addToCart")}  className="!bg-transparent !border-0 !shadow-none p-0">
-            <i className="fa-solid fa-cart-shopping text-pink-600 text-3xl !bg-transparent !shadow-none" />
+      <div className='hidden md:flex md:items-center space-x-4'>
+        <div className="relative">
+          <button onClick={() => navigate('/addToCart')} className="relative p-1">
+            <i className="fa-solid fa-cart-shopping text-pink-600 text-3xl" />
             {count > 0 && (
-          <span className="bg-pink-600 text-white text-xs font-bold rounded-full px-2 py-0.5">
-            {count}
-          </span>
-        )}
-        </button>
-         {/* badge */}
-        
-
+              <span className="absolute -top-2 -right-2 bg-pink-600 text-white text-xs font-bold rounded-full px-2 py-0.5">
+                {count}
+              </span>
+            )}
+          </button>
+        </div>
+        <input
+          type="search"
+          placeholder="Search books..."
+          className="hidden md:inline-block border border-pink-100 rounded-full px-3 py-1 text-sm focus:outline-none focus:ring-2 focus:ring-pink-200"
+        />
       </div>
       {/* Mobile Menu Button */}
-      <div className="md:hidden flex items-center">
+  <div className="md:hidden flex items-center">
         <button
           onClick={() => setIsOpen(!isOpen)}
           className="text-gray-600 hover:text-pink-600 p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-inset focus:ring-pink-500"
@@ -73,10 +79,11 @@ export default function Header(cartCount) {
   {isOpen && (
     <div className="md:hidden bg-pink-50 shadow-lg">
       <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
-        <a href="#" className="text-gray-700 hover:text-pink-600 hover:bg-pink-100 block px-3 py-2 rounded-md text-base font-medium">Home</a>
-        <a href="#" className="text-gray-700 hover:text-pink-600 hover:bg-pink-100 block px-3 py-2 rounded-md text-base font-medium">Shop by Age</a>
-        <a href="#" className="text-gray-700 hover:text-pink-600 hover:bg-pink-100 block px-3 py-2 rounded-md text-base font-medium">Bestsellers</a>
-        <a href="#" className="text-gray-700 hover:text-pink-600 hover:bg-pink-100 block px-3 py-2 rounded-md text-base font-medium">About Us</a>
+        <Link to="/" onClick={() => setIsOpen(false)} className="text-gray-700 hover:text-pink-600 hover:bg-pink-100 block px-3 py-2 rounded-md text-base font-medium">Home</Link>
+        <Link to="/" onClick={() => setIsOpen(false)} className="text-gray-700 hover:text-pink-600 hover:bg-pink-100 block px-3 py-2 rounded-md text-base font-medium">Shop by Age</Link>
+        <Link to="/" onClick={() => setIsOpen(false)} className="text-gray-700 hover:text-pink-600 hover:bg-pink-100 block px-3 py-2 rounded-md text-base font-medium">Bestsellers</Link>
+        <Link to="/" onClick={() => setIsOpen(false)} className="text-gray-700 hover:text-pink-600 hover:bg-pink-100 block px-3 py-2 rounded-md text-base font-medium">About Us</Link>
+        <button onClick={() => { setIsOpen(false); navigate('/addToCart'); }} className="w-full text-left px-3 py-2 text-gray-700 hover:text-pink-600 hover:bg-pink-100 rounded-md">View Cart ({count})</button>
       </div>
     </div>
   )}
