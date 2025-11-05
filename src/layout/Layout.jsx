@@ -6,7 +6,7 @@ import { Outlet } from "react-router-dom"
 export default function Layout() {
     return (
         <div>
-            <div className="mb-[40vh]">
+            <div>
                 <Header />
             </div>
             <Outlet />

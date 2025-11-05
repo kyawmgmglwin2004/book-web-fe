@@ -1,9 +1,9 @@
-// src/pages/OrderForm.jsx
 import React, { useState } from "react";
-import { useCart } from "../context/CartContext";
+import { useCart } from "../context/CartContext"; // <-- your CartContext hook
+import axios from "axios";
 
 export default function OrderForm() {
-  const { cartBooks } = useCart();
+  const { cartBooks, setCartBooks } = useCart();
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -14,13 +14,20 @@ export default function OrderForm() {
 
   const total = cartBooks.reduce((sum, item) => sum + item.price * item.qty, 0);
 
+  // 🧩 Input change handler
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleSubmit = (e) => {
+  // 🧩 Submit handler
+  const handleSubmit = async (e) => {
     e.preventDefault();
+
+    if (cartBooks.length === 0) {
+      alert("Your cart is empty!");
+      return;
+    }
 
     const orderData = {
       customer: formData,
@@ -28,16 +35,23 @@ export default function OrderForm() {
       total,
     };
 
-    console.log("📦 Order Submitted:", orderData);
-    alert("Order placed successfully!");
+    try {
+      // Send to backend
+      const res = await axios.post("http://localhost:5000/api/v1/orders/mail", orderData);
 
-    // here you can send to backend API
-    // await axios.post("http://localhost:5000/api/v1/orders", orderData);
-
-    // clear local cart if you want:
-    // setCartBooks([]);
+      if (res.data.code === 200) {
+        alert("✅ Order placed successfully! Email sent.");
+        setCartBooks([]); // clear cart after success
+      } else {
+        alert("⚠️ Order placed but email not sent.");
+      }
+    } catch (error) {
+      console.error("❌ Order submit error:", error);
+      alert("Failed to place order. Please try again later.");
+    }
   };
 
+  // 🧩 Show if empty
   if (cartBooks.length === 0) {
     return (
       <div className="min-h-screen flex items-center justify-center text-gray-600">
@@ -46,6 +60,7 @@ export default function OrderForm() {
     );
   }
 
+  // 🧩 UI
   return (
     <div className="min-h-screen bg-pink-50 py-12 px-4 sm:px-6 lg:px-8">
       <div className="max-w-3xl mx-auto bg-white rounded-2xl shadow-md p-8">
@@ -63,6 +78,7 @@ export default function OrderForm() {
             required
             className="w-full border border-pink-200 rounded-lg p-3 focus:ring-2 focus:ring-pink-500"
           />
+
           <input
             type="email"
             name="email"
@@ -72,6 +88,7 @@ export default function OrderForm() {
             required
             className="w-full border border-pink-200 rounded-lg p-3 focus:ring-2 focus:ring-pink-500"
           />
+
           <input
             type="tel"
             name="phone"
@@ -81,6 +98,7 @@ export default function OrderForm() {
             required
             className="w-full border border-pink-200 rounded-lg p-3 focus:ring-2 focus:ring-pink-500"
           />
+
           <textarea
             name="address"
             placeholder="Delivery Address"
@@ -104,6 +122,7 @@ export default function OrderForm() {
             </select>
           </div>
 
+          {/* Order Summary */}
           <div className="border-t border-gray-200 mt-6 pt-6">
             <h3 className="text-lg font-semibold text-pink-600 mb-3">
               Order Summary
