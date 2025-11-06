@@ -1,9 +1,11 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useCart } from "../context/CartContext"; // <-- your CartContext hook
 import axios from "axios";
 
 export default function OrderForm() {
   const { cartBooks, setCartBooks } = useCart();
+  const [isSending, setIsSending] = useState(false);
+  const [isSent, setIsSent] = useState(false);
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -23,6 +25,8 @@ export default function OrderForm() {
   // 🧩 Submit handler
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setIsSending(true);
+     setIsSent(false);
 
     if (cartBooks.length === 0) {
       alert("Your cart is empty!");
@@ -35,17 +39,23 @@ export default function OrderForm() {
       total,
     };
 
+    console.log("payload :", orderData)
     try {
-      // Send to backend
       const res = await axios.post("http://localhost:5000/api/v1/orders/mail", orderData);
-
       if (res.data.code === 200) {
         alert("✅ Order placed successfully! Email sent.");
-        setCartBooks([]); // clear cart after success
+        setCartBooks([]);
+        setIsSent(true);
+        setIsSending(false)
+        // clear cart after success
       } else {
         alert("⚠️ Order placed but email not sent.");
+        setIsSending(false);
+        setIsSent(false);
       }
     } catch (error) {
+      setIsSent(false);
+      setIsSending(false);
       console.error("❌ Order submit error:", error);
       alert("Failed to place order. Please try again later.");
     }
@@ -59,6 +69,10 @@ export default function OrderForm() {
       </div>
     );
   }
+
+  // useEffect(() => {
+
+  // }, [cartBooks])
 
   // 🧩 UI
   return (
@@ -147,8 +161,9 @@ export default function OrderForm() {
           <button
             type="submit"
             className="w-full mt-6 bg-pink-600 hover:bg-pink-700 text-white py-3 rounded-lg font-semibold transition-all"
+            disabled={isSending}
           >
-            Place Order
+            {isSending ? "Ordering..." : isSent ? "Order" : "Order"}
           </button>
         </form>
       </div>
