@@ -1,11 +1,9 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import axios from "axios";
 
 export default function AdminDashboard() {
   const [activeTab, setActiveTab] = useState("books");
-  const [books, setBooks] = useState([
-    { id: 1, title: "The Bookworm’s Guide", author: "Jane Doe", price: 20 },
-    { id: 2, title: "Baby Learns Colors", author: "John Smith", price: 15 },
-  ]);
+  const [books, setBooks] = useState([]);
 
   const [orders, setOrders] = useState([
     { id: 101, customer: "Alice", total: 35, status: "Pending" },
@@ -13,6 +11,21 @@ export default function AdminDashboard() {
   ]);
 
   const [newBook, setNewBook] = useState({ title: "", author: "", price: "" });
+
+  const bookList = async () => {
+    try {
+       const res = await axios.get("http://localhost:5000/api/v1/books");
+       if (res && res.data.data && Array.isArray(res.data.data)) {
+         setBooks(res.data.data);
+       }
+    } catch (error) {
+       console.error("Failed to fetch books:", error);
+    }
+  }
+
+  useEffect(() => {
+    bookList();
+  }, [])
 
   // 📚 CRUD Handlers
   const handleAddBook = () => {
