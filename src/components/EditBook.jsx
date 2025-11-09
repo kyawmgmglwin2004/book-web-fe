@@ -53,7 +53,13 @@ export default function EditBook({id, book, onSuccess, onCancel}) {
     formData.append("price", bookForm.price);
     formData.append("stock", bookForm.stock);
     formData.append("remark", bookForm.remark);
-    if (imageFile) formData.append("image", imageFile);
+    if (imageFile) {
+    // new image selected
+    formData.append("image", imageFile);
+  } else {
+    // no new image → send the old image path/name
+    formData.append("oldImage", bookForm.image);
+  }
 
     try {
       await axios.post(`http://localhost:5000/api/v1/books/${id}`, formData, {
@@ -131,7 +137,7 @@ export default function EditBook({id, book, onSuccess, onCancel}) {
           />
           {(preview || bookForm.image) && (
             <img
-              src={preview || `http://localhost:5000/uploads/${bookForm.image}`}
+              src={preview || `${bookForm.image}`}
               alt="Book Preview"
               className="mt-3 w-20 h-20 object-cover rounded"
             />
