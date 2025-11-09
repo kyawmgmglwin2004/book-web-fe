@@ -7,6 +7,7 @@ import { CartProvider } from "./context/CartContext.jsx";
 import OrderForm from "./pages/OrderForm.jsx";
 import Login from "./pages/Login.jsx";
 import AdminDashboard from "./pages/AdminDashboard.jsx";
+import EditBook from "./pages/EditBookModel.jsx";
 
 function App() {
   return (
@@ -23,6 +24,7 @@ function App() {
           <Route path="/order" element={<OrderForm/>} />
           <Route path="/admin" element={<Login/>} />
           <Route path="/adminDashboard" element={<AdminDashboard/>} />
+          <Route path="/edit/:id" element={<EditBook/>}/>
         </Route>
       </Routes>
     </Router>
