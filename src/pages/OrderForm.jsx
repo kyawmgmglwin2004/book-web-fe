@@ -50,7 +50,7 @@ export default function OrderForm() {
         setIsSending(false)
         // clear cart after success
       } else {
-        alert("⚠️ Order placed but email not sent.");
+        alert("Order failed. Please try again.");
         setIsSending(false);
         setIsSent(false);
       }
