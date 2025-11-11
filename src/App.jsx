@@ -8,26 +8,29 @@ import OrderForm from "./pages/OrderForm.jsx";
 import Login from "./pages/Login.jsx";
 import AdminDashboard from "./pages/AdminDashboard.jsx";
 import EditBook from "./pages/EditBookModel.jsx";
+import { SearchProvider } from "./context/SearchContext.jsx";
 
 function App() {
   return (
     <CartProvider>
-      <Router>
-      <Routes>
-        <Route
-          path="/"
-          element={<Layout />}
-        >
-          <Route path="/" element={<Home />} />
-          <Route path="/books/:id" element={<BookDetail/>} />
-          <Route path="/addToCart" element={<AddToCart/>}/>
-          <Route path="/order" element={<OrderForm/>} />
-          <Route path="/admin" element={<Login/>} />
-          <Route path="/adminDashboard" element={<AdminDashboard/>} />
-          <Route path="/edit/:id" element={<EditBook/>}/>
-        </Route>
-      </Routes>
-    </Router>
+      <SearchProvider>
+        <Router>
+        <Routes>
+          {/* 🏠 Main Layout Routes */}
+          <Route path="/" element={<Layout />}>
+            <Route index element={<Home />} />
+            <Route path="books/:id" element={<BookDetail />} />
+            <Route path="addToCart" element={<AddToCart />} />
+            <Route path="order" element={<OrderForm />} />
+            <Route path="edit/:id" element={<EditBook />} />
+          </Route>
+
+          {/* 🔐 Admin Routes */}
+          <Route path="/admin" element={<Login />} />
+          <Route path="/adminDashboard" element={<AdminDashboard />} />
+        </Routes>
+      </Router>
+      </SearchProvider>
     </CartProvider>
   );
 }

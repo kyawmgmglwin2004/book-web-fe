@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useCart } from '../context/CartContext';
+import { useSearch } from '../context/SearchContext';
 
 
 
@@ -23,6 +24,7 @@ export default function Header() {
   const navigate = useNavigate();
   const [isOpen, setIsOpen] = useState(false);
   const { cartBooks } = useCart();
+  const { searchQuery, setSearchQuery } = useSearch();
   const count = cartBooks.length;
 
   return (
@@ -32,19 +34,19 @@ export default function Header() {
       {/* Logo */}
       <div className="flex items-center">
         <Link to="/" className="text-2xl font-bold text-pink-600">
-          📚 Bookworm Babies
+          📚
         </Link>
       </div>
 
       {/* Desktop Navigation */}
-      <div className="hidden md:flex md:items-center md:space-x-8">
+      {/* <div className="hidden md:flex md:items-center md:space-x-8">
         <Link to="/" className="text-gray-700 hover:text-pink-600 px-3 py-2 rounded-md text-sm font-medium transition-colors duration-200">Home</Link>
         <Link to="/" className="text-gray-700 hover:text-pink-600 px-3 py-2 rounded-md text-sm font-medium transition-colors duration-200">Shop by Age</Link>
         <Link to="/" className="text-gray-700 hover:text-pink-600 px-3 py-2 rounded-md text-sm font-medium transition-colors duration-200">Bestsellers</Link>
         <Link to="/" className="text-gray-700 hover:text-pink-600 px-3 py-2 rounded-md text-sm font-medium transition-colors duration-200">About Us</Link>
-      </div>
+      </div> */}
 
-      <div className='hidden md:flex md:items-center space-x-4'>
+      <div className=' flex md:items-center space-x-4'>
         <div className="relative">
           <button onClick={() => navigate('/addToCart')} className="relative p-1">
             <i className="fa-solid fa-cart-shopping text-pink-600 text-3xl" />
@@ -56,9 +58,11 @@ export default function Header() {
           </button>
         </div>
         <input
+          value={searchQuery}
           type="search"
+          onChange={(e)=> setSearchQuery(e.target.value)}
           placeholder="Search books..."
-          className="hidden md:inline-block border border-pink-100 rounded-full px-3 py-1 text-sm focus:outline-none focus:ring-2 focus:ring-pink-200"
+          className=" border border-pink-100 rounded-full px-3 py-1 text-sm focus:outline-none focus:ring-2 focus:ring-pink-200"
         />
       </div>
       {/* Mobile Menu Button */}
