@@ -6,13 +6,17 @@ export default function OrderDetail(id) {
   const navigate = useNavigate();
   const [order, setOrder] = useState(null);
   const [loading, setLoading] = useState(true);
+  const token = localStorage.getItem('token')
   const odId = id.id;
   // ✅ Fetch Order Detail
   useEffect(() => {
     const fetchOrder = async () => {
       try {
-        const res = await axios.get(`http://localhost:5000/api/v1/orderList/orders/${odId}`);
-        console.log("query :", `http://localhost:5000/api/v1/orderList/orders/${odId}`)
+        const res = await axios.get(`http://localhost:5000/api/v1/orderList/orders/${odId}`,{
+          headers: {
+        Authorization: `Bearer ${token}`, }
+        });
+        
         setOrder(res.data.data);
         console.log("res ;", id) // expect { id, name, email, phone, address, total, items: [...] }
       } catch (err) {

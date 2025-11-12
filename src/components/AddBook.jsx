@@ -11,6 +11,7 @@ export default function AddBook({ onSuccess, onCancel }) {
   const [imageFile, setImageFile] = useState(null);
   const [preview, setPreview] = useState(null);
   const [loading, setLoading] = useState(false);
+  const token = localStorage.getItem('token');
 
   // handle input change
   const handleChange = (e) => {
@@ -42,7 +43,8 @@ export default function AddBook({ onSuccess, onCancel }) {
     try {
       setLoading(true);
       await axios.post("http://localhost:5000/api/v1/books", formData, {
-        headers: { "Content-Type": "multipart/form-data" },
+        headers: { "Content-Type": "multipart/form-data" ,
+        Authorization: `Bearer ${token}` },
       });
       alert("✅ Book added successfully!");
       onSuccess(); // ✅ close + refresh

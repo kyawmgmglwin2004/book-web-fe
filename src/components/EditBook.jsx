@@ -11,6 +11,7 @@ export default function EditBook({id, book, onSuccess, onCancel}) {
   const [preview, setPreview] = useState(null);
   const [imageFile, setImageFile] = useState(null);
   const [loading, setLoading] = useState(false);
+  const token = localStorage.getItem('token');
 
   // Fetch book data if not passed from state
   useEffect(() => {
@@ -63,7 +64,7 @@ export default function EditBook({id, book, onSuccess, onCancel}) {
 
     try {
       await axios.post(`http://localhost:5000/api/v1/books/${id}`, formData, {
-        headers: { "Content-Type": "multipart/form-data" },
+        headers: { "Content-Type": "multipart/form-data", Authorization: `Bearer ${token}` },
       });
 
       alert("✅ Book updated successfully!");

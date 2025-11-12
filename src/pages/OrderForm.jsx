@@ -65,7 +65,7 @@ export default function OrderForm() {
   // 🧩 Show if empty
   if (cartBooks.length === 0) {
     return (
-      <div className="min-h-screen flex items-center justify-center text-gray-600">
+      <div className="h-auto mt-[10vh] flex items-center justify-center text-gray-600">
         <h2>Your cart is empty 🛒</h2>
       </div>
     );

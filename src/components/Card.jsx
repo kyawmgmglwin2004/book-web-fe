@@ -3,6 +3,7 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { useCart } from "../context/CartContext";
 import { useSearch } from "../context/SearchContext";
+import Pagination from "./Paginate";
 
 export default function Card() {
   const [addedBooks, setAddedBooks] = useState([]);
@@ -140,29 +141,11 @@ export default function Card() {
           );
         })}
       </div>
-
-      {/* Pagination */}
-      <div className="flex justify-center items-center mt-10 gap-4">
-        <button
-          onClick={() => setPage((prev) => Math.max(prev - 1, 1))}
-          disabled={page === 1}
-          className="px-4 py-2 bg-gray-200 hover:bg-gray-300 rounded-lg disabled:opacity-50"
-        >
-          Previous
-        </button>
-
-        <span className="font-semibold text-gray-700">
-          Page {page} of {totalPages}
-        </span>
-
-        <button
-          onClick={() => setPage((prev) => Math.min(prev + 1, totalPages))}
-          disabled={page === totalPages}
-          className="px-4 py-2 bg-gray-200 hover:bg-gray-300 rounded-lg disabled:opacity-50"
-        >
-          Next
-        </button>
-      </div>
+      <Pagination
+              currentPage={page}
+              totalPage={totalPages}
+              onPageChange={setPage}
+               />
     </section>
   );
 }

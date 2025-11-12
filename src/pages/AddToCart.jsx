@@ -3,7 +3,7 @@ import Cart from "../components/Cart";
 
 export default function AddToCart() {
     return(
-        <div className="mt-[40vh]">
+        <div className="">
             <Cart/>
         </div>
     )

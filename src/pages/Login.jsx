@@ -46,6 +46,9 @@ export default function Login() {
         
       if (response.data.code === 200) {
         setIsSent(true);
+        const token = response.data.data.token;
+        console.log("token :", response.data.data.token)
+        localStorage.setItem('token', token);
         navigate("/adminDashboard")
         setFormData({ userName: "" , email: "", password: "" });
         setAlertMessage("✅ Successfully logged in.");

@@ -9,12 +9,13 @@ export default function Cart() {
 
   const total = cartBooks.reduce((sum, item) => sum + item.price * item.qty, 0);
 
-  const removeItem = (id) => removeFromCart(id);
-  const changeQty = (id, delta) => updateQty(id, delta);
-
   return (
-    <div className="min-h-screen bg-pink-50 py-12 px-4 sm:px-6 lg:px-8 mt-[-40vh]">
-      <div className="max-w-5xl mx-auto bg-white shadow-lg rounded-2xl overflow-hidden">
+    <div className="bg-pink-50 py-12 px-4 sm:px-6 lg:px-8 min-h-full">
+      <div
+        className={`max-w-5xl mx-auto bg-white shadow-lg rounded-2xl overflow-hidden ${
+          cartBooks.length > 3 ? "h-auto" : "h-fit"
+        }`}
+      >
         <div className="px-6 py-4 border-b border-pink-200 flex justify-between items-center">
           <h1 className="text-2xl font-bold text-pink-600">🛒 Your Cart</h1>
           <p className="text-gray-500 text-sm">
@@ -22,7 +23,6 @@ export default function Cart() {
           </p>
         </div>
 
-        {/* Cart Items */}
         <div className="divide-y divide-gray-200">
           {cartBooks.map((book) => (
             <div
@@ -41,10 +41,9 @@ export default function Cart() {
                 </div>
               </div>
 
-              {/* Qty Controls */}
               <div className="flex items-center gap-3">
                 <button
-                  onClick={() => changeQty(book.id, -1)}
+                  onClick={() => updateQty(book.id, -1)}
                   className="px-3 py-1 bg-gray-200 hover:bg-gray-300 rounded-lg font-bold"
                   disabled={book.qty <= 1}
                 >
@@ -52,16 +51,15 @@ export default function Cart() {
                 </button>
                 <span className="text-lg font-semibold">{book.qty}</span>
                 <button
-                  onClick={() => changeQty(book.id, 1)}
+                  onClick={() => updateQty(book.id, 1)}
                   className="px-3 py-1 bg-gray-200 hover:bg-gray-300 rounded-lg font-bold"
                 >
                   +
                 </button>
               </div>
 
-              {/* Remove Button */}
               <button
-                onClick={() => removeItem(book.id)}
+                onClick={() => removeFromCart(book.id)}
                 className="text-gray-400 hover:text-red-500 transition"
               >
                 <X />
@@ -70,7 +68,6 @@ export default function Cart() {
           ))}
         </div>
 
-        {/* Summary Section */}
         {cartBooks.length > 0 && (
           <div className="p-6 bg-pink-50 border-t border-pink-200">
             <div className="flex justify-between items-center mb-4">
@@ -91,3 +88,4 @@ export default function Cart() {
     </div>
   );
 }
+
