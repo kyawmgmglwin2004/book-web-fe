@@ -23,13 +23,17 @@ export default function AdminDashboard() {
   const [booksPerPage] = useState(10);
   const [ordersPerPage] = useState(10)
   const token = localStorage.getItem('token');
-
+  const [searchQuery, setSearchQuery] = useState("");
   const navigate = useNavigate();
 
   // Fetch books with pagination
   const bookList = async (page = 1) => {
     try {
-      const res = await axios.get(`http://localhost:5000/api/v1/books?page=${page}&limit=${booksPerPage}`);
+      const res = await axios.get(
+        `http://localhost:5000/api/v1/books?page=${page}&limit=${booksPerPage}&title=${encodeURIComponent(
+          searchQuery || ""
+        )}`
+      );
       if (res.data.code === 200) {
         setBooks(res.data.data.data);
         setTotalPage(res.data.data.pagination.totalPages);
@@ -66,7 +70,7 @@ export default function AdminDashboard() {
   useEffect(() => {
     bookList(currentPage);
     orderList();
-  }, [currentPage]);
+  }, [currentPage, searchQuery]);
 
   const handleDeleteBook = async (id) => {
     try {
@@ -139,7 +143,9 @@ export default function AdminDashboard() {
                 <input
           value={searchQuery}
           type="search"
-          // onChange={(e)=> setSearchQuery(e.target.value)}
+          onChange={(e)=> setSearchQuery(e.target.value)}
+          onMouseDown={(e) => e.stopPropagation()}
+  onFocus={(e) => e.stopPropagation()} 
           placeholder="Search books..."
           className=" border border-pink-100 rounded-full px-3 py-1 text-sm focus:outline-none focus:ring-2 focus:ring-pink-200"
         />
