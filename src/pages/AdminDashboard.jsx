@@ -24,6 +24,7 @@ export default function AdminDashboard() {
   const [ordersPerPage] = useState(10)
   const token = localStorage.getItem('token');
   const [searchQuery, setSearchQuery] = useState("");
+  const [testText, setTestText]= useState("")
   const navigate = useNavigate();
 
   // Fetch books with pagination
@@ -47,6 +48,8 @@ export default function AdminDashboard() {
     }
   };
 
+  useEffect(()=>{console.log("render : ")},[])
+
   // Fetch orders
   const orderList = async (page = 1) => {
     try {
@@ -67,6 +70,9 @@ export default function AdminDashboard() {
     }
   };
 
+  useEffect(()=>{console.log("testText : ", testText)},[testText])
+
+  
   useEffect(() => {
     bookList(currentPage);
     orderList();
@@ -143,12 +149,22 @@ export default function AdminDashboard() {
                 <input
           value={searchQuery}
           type="search"
-          onChange={(e)=> setSearchQuery(e.target.value)}
-          onMouseDown={(e) => e.stopPropagation()}
-  onFocus={(e) => e.stopPropagation()} 
+          // onChange={(e)=> setSearchQuery(e.target.value)}
           placeholder="Search books..."
           className=" border border-pink-100 rounded-full px-3 py-1 text-sm focus:outline-none focus:ring-2 focus:ring-pink-200"
         />
+
+        {/* <input type="text" className="text-black border-2 border-black" value={searchQuery} onChange={(e)=>{setSearchQuery(e.target.value)}} /> */}
+               <input
+  type="text"
+  className="text-black border-2 border-black"
+  value={testText}
+  onChange={(e) => setTestText(e.target.value)}
+  placeholder="Search..."
+/>
+
+
+
                 <Button onClick={() => setShowAddBook(true)} className="bg-pink-600 text-white hover:bg-pink-700">
                   ➕ Add New Book
                 </Button>

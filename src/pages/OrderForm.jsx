@@ -44,12 +44,17 @@ export default function OrderForm() {
     try {
       const res = await axios.post("http://localhost:5000/api/v1/orders/mail", orderData);
       if (res.data.code === 200) {
+        console.log("res :", res)
         alert("✅ Order placed successfully! Email sent.");
         setCartBooks([]);
         setIsSent(true);
         setIsSending(false)
         // clear cart after success
-      } else {
+      } else if(res.data.code === 429) {
+        alert(res.data.message);
+        setIsSending(false);
+        setIsSent(false);
+      }else {
         alert("Order failed. Please try again.");
         setIsSending(false);
         setIsSent(false);
