@@ -8,7 +8,7 @@ export default function Cart() {
   const navigate = useNavigate();
 
   const total = cartBooks.reduce((sum, item) => sum + item.price * item.qty, 0);
-
+  console.log("Cart Books:", cartBooks);
   return (
     <div className="bg-pink-50 py-12 px-4 sm:px-6 lg:px-8 min-h-full">
       <div
@@ -31,7 +31,7 @@ export default function Cart() {
             >
               <div className="flex items-center gap-4">
                 <img
-                  src={book.image}
+                  src={book.images[0]}
                   alt={book.title}
                   className="h-28 w-28 object-cover rounded-lg"
                 />

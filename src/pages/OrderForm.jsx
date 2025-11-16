@@ -12,7 +12,7 @@ export default function OrderForm() {
     email: "",
     phone: "",
     address: "",
-    payment: "cash",
+    payment: "K Pay",
   });
 
   const total = cartBooks.reduce((sum, item) => sum + item.price * item.qty, 0);
@@ -70,7 +70,7 @@ export default function OrderForm() {
   // 🧩 Show if empty
   if (cartBooks.length === 0) {
     return (
-      <div className="h-auto mt-[10vh] flex items-center justify-center text-gray-600">
+      <div className="h-auto mt-[10vh] flex items-center justify-center text-gray-600 mb-10">
         <h2>Your cart is empty 🛒</h2>
       </div>
     );
@@ -137,8 +137,9 @@ export default function OrderForm() {
               onChange={handleChange}
               className="border border-pink-200 rounded-lg p-2"
             >
-              <option value="cash">💵 Cash on Delivery</option>
-              <option value="card">💳 Credit / Debit Card</option>
+              <option value="K Pay">K Pay</option>
+              <option value="Wave Pay">Wave Pay</option>
+              <option value="AYA Pay">AYA Pay</option>
             </select>
           </div>
 

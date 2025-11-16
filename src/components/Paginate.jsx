@@ -19,7 +19,7 @@ const Pagination = ({ currentPage, totalPage, onPageChange }) => {
           currentPage === 1 ? "opacity-50 cursor-not-allowed" : ""
         }`}
       >
-        ◀ Prev
+        Prev
       </Button>
 
       <span className="font-semibold text-gray-700">
@@ -33,7 +33,7 @@ const Pagination = ({ currentPage, totalPage, onPageChange }) => {
           currentPage === totalPage ? "opacity-50 cursor-not-allowed" : ""
         }`}
       >
-        Next ▶
+        Next
       </Button>
     </div>
   );

@@ -3,6 +3,7 @@ import axios from "axios";
 import { useCart } from "../context/CartContext";
 import { useSearch } from "../context/SearchContext";
 import Pagination from "./Paginate";
+import Slider from "react-slick";
 
 export default function Card() {
   const [addedBooks, setAddedBooks] = useState([]);
@@ -14,7 +15,17 @@ export default function Card() {
 
   const [selectedBook, setSelectedBook] = useState(null); // ✅ modal state
   const { addToCart } = useCart();
-  const { searchQuery } = useSearch();
+  const { searchQuery, searchType, searchAge } = useSearch();
+  const sliderSettings = {
+  dots: true,
+  infinite: true,
+  speed: 700,
+  slidesToShow: 1,
+  slidesToScroll: 1,
+  autoplay: true,
+  autoplaySpeed: 2000,
+  pauseOnHover: false,
+};
 
   const handleAddToCart = (book) => {
     if (addedBooks.includes(book.id)) return;
@@ -22,15 +33,15 @@ export default function Card() {
     addToCart(book);
   };
 
-  const fetchBooks = async (searchValue) => {
+  const fetchBooks = async (searchValue, searchType, searchAge) => {
     try {
       setLoading(true);
       const res = await axios.get(
-        `http://localhost:5000/api/v1/books?page=${page}&limit=${limit}&title=${encodeURIComponent(
+        `http://localhost:5000/api/v1/books?page=${page}&limit=${limit}&type=${searchType}&age=${searchAge}&title=${encodeURIComponent(
           searchValue || ""
         )}`
       );
-
+      console.log("Fetch Books Response:", searchType);
       if (res.data.code === 200 && Array.isArray(res.data.data?.data)) {
         setBooks(res.data.data.data);
         setTotalPages(res.data.data.pagination.totalPages);
@@ -49,13 +60,14 @@ export default function Card() {
   };
 
   useEffect(() => {
-    fetchBooks(searchQuery);
+    fetchBooks(searchQuery, searchType, searchAge);
+
   }, [page]);
 
   useEffect(() => {
     setPage(1);
-    fetchBooks(searchQuery);
-  }, [searchQuery]);
+    fetchBooks(searchQuery, searchType, searchAge);
+  }, [searchQuery, searchType, searchAge]);
 
   if (loading) {
     return (
@@ -99,11 +111,31 @@ export default function Card() {
         onClick={() => setSelectedBook(book)} // can't open modal if out of stock
         className={`relative bg-white rounded-2xl shadow-md hover:shadow-2xl transition-shadow duration-300 overflow-hidden flex flex-col cursor-pointer`}
       >
-        <img
+        {/* <img
           src={book.image}
           alt={book.title}
           className="h-56 w-full object-cover"
+        /> */}
+        <Slider
+    {...sliderSettings}
+  >
+    {book.images.length > 0 ? (
+      book.images.map((img, index) => (
+        <img
+          key={index}
+          src={img}
+          className="h-56 w-full object-cover"
+          alt={book.title}
         />
+      ))
+    ) : (
+      <img
+        src="/no-image.jpg"
+        className="h-56 w-full object-cover"
+        alt="no-img"
+      />
+    )}
+  </Slider>
         {/* Out of Stock Badge */}
         {outOfStock && (
           <span className="absolute top-3 left-3 bg-red-700 text-white text-xs px-2 py-1 rounded-full font-semibold z-10">
@@ -150,22 +182,39 @@ export default function Card() {
           ></div>
 
           {/* Modal content */}
-          <div className="relative bg-white rounded-2xl shadow-xl max-w-md w-[90vw] p-9 z-10 overflow-y-auto max-h-[80vh]">
+          <div className="relative bg-white rounded-2xl shadow-xl max-w-md w-[90vw] p-9 z-10 overflow-y-auto max-h-[90vh] ">
             <button
-              className="absolute top-4 right-4 text-gray-500 hover:text-gray-700  font-bold text-xl"
+              className="absolute top-4 right-4 text-gray-500 hover:text-gray-700 font-bold text-xl"
               onClick={() => setSelectedBook(null)}
             >
               &times;
             </button>
-            <img
-              src={selectedBook.image}
-              alt={selectedBook.title}
-              className="w-full h-64 object-cover rounded-lg"
-            />
+             <Slider
+    {...sliderSettings}
+  >
+    {selectedBook.images.length > 0 ? (
+      selectedBook.images.map((img, index) => (
+        <img
+          key={index}
+          src={img}
+          className="h-56 w-full object-cover"
+          alt={selectedBook.title}
+        />
+      ))
+    ) : (
+      <img
+        src="/no-image.jpg"
+        className="h-70 w-full object-cover"
+        alt="no-img"
+      />
+    )}
+  </Slider>
             <h2 className="text-2xl font-bold text-gray-900 mt-4">
               {selectedBook.title}
             </h2>
             <p className="text-pink-600 font-semibold mt-2">${selectedBook.price}</p>
+            <p className="text-pink-600 font-semibold mt-2">Type : {selectedBook.type}</p>
+            <p className="text-pink-600 font-semibold mt-2">Age : {selectedBook.age} years</p>
             <p className="text-gray-600 mt-3">{selectedBook.remark || "No description."}</p>
             <button
               onClick={() => handleAddToCart(selectedBook)}

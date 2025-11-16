@@ -2,7 +2,7 @@ import React from "react";
 
 export default function Alert({ message, type }) {
   const colors = {
-    success: "bg-black text-blue-400 border border-blue-500",
+    success: "bg-black text-green-500 border border-green-500",
     error: "bg-black border border-red-500 text-red-400",
   };
 
