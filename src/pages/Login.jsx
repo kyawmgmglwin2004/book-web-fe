@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Alert from "../components/Alert";
 import axios from "axios";
-
+import api from "../api";
 export default function Login() {
   const [showPassword, setShowPassword] = useState(false);
 //   const [checked, setChecked] = useState(false);
@@ -42,24 +42,25 @@ export default function Login() {
     setIsSent(false);
 
     try {
-      const response = await axios.post("http://localhost:5000/api/v1/admin/login", formData );
+      // const response = await axios.post("http://localhost:5000/api/v1/admin/login", formData );
+      const response = await api.post("/admin/login", formData );
         
-      if (response.data.code === 200) {
+      if (response.code === 200) {
         setIsSent(true);
-        const token = response.data.data.token;
-        console.log("token :", response.data.data.token)
+        const token = response.data.token;
+        console.log("token :", response.data.token)
         localStorage.setItem('token', token);
         navigate("/adminDashboard")
         setFormData({ userName: "" , email: "", password: "" });
         setAlertMessage("✅ Successfully logged in.");
         setAlertType("success");
-      } else if (response.data.code === 404) {
+      } else if (response.code === 404) {
         setIsSent(false);
-        setAlertMessage(response.data.message);
+        setAlertMessage(response.message);
         setAlertType("error");
-      }else if(response.data.code === 400) {
+      }else if(response.code === 400) {
         setIsSent(false);
-        setAlertMessage(response.data.message);
+        setAlertMessage(response.message);
         setAlertType("error");
       }
     } catch (error) {

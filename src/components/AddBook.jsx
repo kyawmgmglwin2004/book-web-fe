@@ -1,6 +1,6 @@
 import React, { useState , useEffect} from "react";
-import axios from "axios";
 import Alert from "./Alert";
+import api from "../api";
 
 export default function AddBook({ onSuccess, onCancel }) {
   const [form, setForm] = useState({
@@ -55,14 +55,17 @@ export default function AddBook({ onSuccess, onCancel }) {
 
     try {
       setLoading(true);
-     const res = await axios.post("http://localhost:5000/api/v1/books", formData, {
-        headers: { 
-          "Content-Type": "multipart/form-data",
-          Authorization: `Bearer ${token}` 
-        },
-      });
+    //  const res = await axios.post("http://localhost:5000/api/v1/books", formData, {
+    //     headers: { 
+    //       "Content-Type": "multipart/form-data",
+    //       Authorization: `Bearer ${token}` 
+    //     },
+    //   });
       
-      if(res.data.code !== 200){
+      const res = await api.post("/books", formData);
+
+      console.log("Add book response:", res);
+      if(res.code !== 200){
         setAlertMessage("Failed to add book. Please try again.");
         setAlertType("error");
         return

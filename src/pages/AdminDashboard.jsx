@@ -6,6 +6,7 @@ import EditBook from "../components/EditBook.jsx";
 import OrderDetail from "../components/OrderDeatail.jsx";
 import Pagination from "../components/Paginate.jsx";
 import Alert from "../components/Alert.jsx";
+import api from "../api";
 
 export default function AdminDashboard() {
   const [activeTab, setActiveTab] = useState("books");
@@ -33,15 +34,23 @@ export default function AdminDashboard() {
   // Fetch books with pagination
   const bookList = async (page = 1) => {
     try {
-      const res = await axios.get(
-        `http://localhost:5000/api/v1/books?page=${page}&limit=${booksPerPage}&title=${encodeURIComponent(
-          searchQuery || ""
-        )}`
-      );
-      if (res.data.code === 200) {
-        setBooks(res.data.data.data);
-        setTotalPage(res.data.data.pagination.totalPages);
-      } else {
+      // const res = await axios.get(
+      //   `http://localhost:5000/api/v1/books?page=${page}&limit=${booksPerPage}&title=${encodeURIComponent(
+      //     searchQuery || ""
+      //   )}`
+      // );
+      const res = await api.get(`/books?page=${page}&limit=${booksPerPage}&title=${encodeURIComponent(
+        searchQuery || ""
+      )}`); 
+      if (res.code === 200) {
+        setBooks(res.data.data);
+        setTotalPage(res.data.pagination.totalPages);
+      }else if(res.code === 404){
+        setAlertMessage("No books found");
+        setAlertType("error");
+        setBooks([]);
+      } 
+      else {
         setAlertMessage("Failed to fetch books");
         setAlertType("error");
         setBooks([]);
@@ -62,15 +71,16 @@ export default function AdminDashboard() {
 
       const data = { status: newStatus };
 
-      const res = await axios.post(
-        `http://localhost:5000/api/v1/orderList/orders/${id}`,
-        data,
-        {
-          headers: { Authorization: `Bearer ${token}` },
-        }
-      );
+      // const res = await axios.post(
+      //   `http://localhost:5000/api/v1/orderList/orders/${id}`,
+      //   data,
+      //   {
+      //     headers: { Authorization: `Bearer ${token}` },
+      //   }
+      // );
+      const res = await api.post(`/orderList/orders/${id}`, data);
 
-      if (res.data.code === 200) {
+      if (res.code === 200) {
         setOrderStatus(newStatus);
         setAlertMessage(`Order status updated to ${newStatus} successfully!`);
         setAlertType("success");
@@ -89,16 +99,24 @@ export default function AdminDashboard() {
   // Fetch orders
   const orderList = async (page = 1) => {
     try {
-      const res = await axios.get(
-        `http://localhost:5000/api/v1/orderList/orders?page=${page}&limit=${ordersPerPage}`,
-        {
-          headers: { Authorization: `Bearer ${token}` },
-        }
-      );
-      if (res.data.code === 200) {
-        setOrders(res.data.data.data);
-        setOrderTotalPage(res.data.data.pagination.totalPages);
-      } else {
+      // const res = await axios.get(
+      //   `http://localhost:5000/api/v1/orderList/orders?page=${page}&limit=${ordersPerPage}`,
+      //   {
+      //     headers: { Authorization: `Bearer ${token}` },
+      //   }
+      // );
+      const res = await api.get(`/orderList/orders?page=${page}&limit=${ordersPerPage}`);
+      console.log("Orders fetched:", res);
+      if (res.code === 200) {
+        setOrders(res.data.data);
+        setOrderTotalPage(res.data.pagination.totalPages);
+      }else if(res.code === 404){
+        setAlertMessage("No orders found");
+        setAlertType("error");
+        setOrders([]);
+        setOrderTotalPage(1);
+      } 
+      else {
         setAlertMessage("Failed to fetch orders");
         setAlertType("error");
         setOrders([]);
@@ -116,14 +134,15 @@ export default function AdminDashboard() {
 
   const handleDeleteBook = async (id) => {
     try {
-      const res = await axios.delete(
-        `http://localhost:5000/api/v1/books/${id}`,
-        {
-          headers: { Authorization: `Bearer ${token}` },
-        }
-      );
+      // const res = await axios.delete(
+      //   `http://localhost:5000/api/v1/books/${id}`,
+      //   {
+      //     headers: { Authorization: `Bearer ${token}` },
+      //   }
+      // );
+      const res = await api.delete(`/books/${id}`);
       
-      if (res.data.code === 200) {
+      if (res.code === 200) {
         setAlertMessage("Book deleted successfully!");
         setAlertType("success");
         bookList(currentPage);
@@ -140,14 +159,15 @@ export default function AdminDashboard() {
 
   const handleDeleteOrder = async (id) => {
     try {
-      const res = await axios.delete(
-        `http://localhost:5000/api/v1/orderList/orders/${id}`,
-        {
-          headers: { Authorization: `Bearer ${token}` },
-        }
-      );
+      // const res = await axios.delete(
+      //   `http://localhost:5000/api/v1/orderList/orders/${id}`,
+      //   {
+      //     headers: { Authorization: `Bearer ${token}` },
+      //   }
+      // );
+      const res = await api.delete(`/orderList/orders/${id}`);
       
-      if (res.data.code === 200) {
+      if (res.code === 200) {
         setAlertMessage("Order deleted successfully!");
         setAlertType("success");
         orderList();
@@ -177,8 +197,12 @@ export default function AdminDashboard() {
 
   useEffect(() => {
     bookList(currentPage);
-    orderList();
   }, [currentPage, searchQuery]);
+  useEffect(() => {
+  if (activeTab === "orders") {
+    orderList(orderPage);
+  }
+}, [activeTab, orderPage]);
 
   const Button = ({ children, className, ...props }) => (
     <button
@@ -230,7 +254,7 @@ export default function AdminDashboard() {
                 bg-pink-500 text-white 
                 hover:bg-white hover:text-pink-600 hover:font-bold`}
           >
-            <i class="fa-regular fa-hand-point-left me-4"></i>
+            <i className="fa-regular fa-hand-point-left me-4"></i>
           Go to User View
           </button>
           <button

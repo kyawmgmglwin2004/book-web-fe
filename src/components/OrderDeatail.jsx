@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
+import api from "../api";
 
 export default function OrderDetail(id) {
   const navigate = useNavigate();
@@ -12,12 +13,13 @@ export default function OrderDetail(id) {
   useEffect(() => {
     const fetchOrder = async () => {
       try {
-        const res = await axios.get(`http://localhost:5000/api/v1/orderList/orders/${odId}`,{
-          headers: {
-        Authorization: `Bearer ${token}`, }
-        });
-        
-        setOrder(res.data.data);
+            // const res = await axios.get(`http://localhost:5000/api/v1/orderList/orders/${odId}`,{
+            //   headers: {
+            // Authorization: `Bearer ${token}`, }
+            // });
+        const res = await api.get(`/orderList/orders/${odId}`);
+
+        setOrder(res.data);
         console.log("res ;", id) // expect { id, name, email, phone, address, total, items: [...] }
       } catch (err) {
         console.error("❌ Failed to fetch order:", err);

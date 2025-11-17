@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useCart } from "../context/CartContext"; // <-- your CartContext hook
 import axios from "axios";
+import api from "../api";
 
 export default function OrderForm() {
   const { cartBooks, setCartBooks } = useCart();
@@ -42,16 +43,17 @@ export default function OrderForm() {
 
     console.log("payload :", orderData)
     try {
-      const res = await axios.post("http://localhost:5000/api/v1/orders/mail", orderData);
-      if (res.data.code === 200) {
+      // const res = await axios.post("http://localhost:5000/api/v1/orders/mail", orderData);
+      const res = await api.post("/orders/mail", orderData);
+      if (res.code === 200) {
         console.log("res :", res)
         alert("✅ Order placed successfully! Email sent.");
         setCartBooks([]);
         setIsSent(true);
         setIsSending(false)
         // clear cart after success
-      } else if(res.data.code === 429) {
-        alert(res.data.message);
+      } else if(res.code === 429) {
+        alert(res.message);
         setIsSending(false);
         setIsSent(false);
       }else {

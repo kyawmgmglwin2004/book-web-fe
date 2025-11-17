@@ -3,9 +3,13 @@ import axios from "axios";
 import { useCart } from "../context/CartContext";
 import { useSearch } from "../context/SearchContext";
 import Pagination from "./Paginate";
-import Slider from "react-slick";
+import Slider from "react-slick"; 
+import api from "../api";
+
 
 export default function Card() {
+  const Base = import.meta.env.VITE_ENDPOINT;
+  console.log("Base URL:", Base);
   const [addedBooks, setAddedBooks] = useState([]);
   const [books, setBooks] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -36,18 +40,18 @@ export default function Card() {
   const fetchBooks = async (searchValue, searchType, searchAge) => {
     try {
       setLoading(true);
-      const res = await axios.get(
-        `http://localhost:5000/api/v1/books?page=${page}&limit=${limit}&type=${searchType}&age=${searchAge}&title=${encodeURIComponent(
-          searchValue || ""
-        )}`
-      );
-      console.log("Fetch Books Response:", searchType);
-      if (res.data.code === 200 && Array.isArray(res.data.data?.data)) {
-        setBooks(res.data.data.data);
-        setTotalPages(res.data.data.pagination.totalPages);
-      } else if (res.data.code === 200 && Array.isArray(res.data.data)) {
+      // const res = await axios.get(
+      //   `${Base}/books?page=${page}&limit=${limit}&type=${searchType}&age=${searchAge}&title=${encodeURIComponent(
+      //     searchValue || ""
+      //   )}`
+      // );
+      const res = await api.get(`/books?page=${page}&limit=${limit}&type=${searchType}&age=${searchAge}&title=${encodeURIComponent(
+        searchValue || ""
+      )}`);
+      console.log("Fetched books response:", res.data.data);
+      if (res.code === 200 && Array.isArray(res.data?.data)) {
         setBooks(res.data.data);
-        setTotalPages(1);
+        setTotalPages(res.data.pagination.totalPages);
       } else {
         setBooks([]);
       }
@@ -89,6 +93,7 @@ export default function Card() {
       </div>
     );
   }
+  console.log("Books to display:", books);
 
   return (
     <section className="bg-pink-50 py-16 px-4 sm:px-6 lg:px-8 mt-[0vh] rounded-lg relative">
