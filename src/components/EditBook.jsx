@@ -118,16 +118,6 @@ export default function EditBook({ id, book, onSuccess, onCancel }) {
     imageFiles.forEach((file) => formData.append("images", file));
 
     try {
-      // const res = await axios.post(
-      //   `http://localhost:5000/api/v1/books/${id}`,
-      //   formData,
-      //   {
-      //     headers: {
-      //       "Content-Type": "multipart/form-data",
-      //       Authorization: `Bearer ${token}`,
-      //     },
-      //   }
-      // );
       const res = await api.post(`/books/${id}`, formData);
 
       if (res.code !== 200) {

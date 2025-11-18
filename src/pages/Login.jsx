@@ -1,12 +1,9 @@
 import React, { useEffect, useState } from "react";
-// import ReCAPTCHA from "react-google-recaptcha";
 import { useNavigate } from "react-router-dom";
 import Alert from "../components/Alert";
-import axios from "axios";
 import api from "../api";
 export default function Login() {
   const [showPassword, setShowPassword] = useState(false);
-//   const [checked, setChecked] = useState(false);
   const navigate = useNavigate();
 
   const [formData, setFormData] = useState({
@@ -15,10 +12,7 @@ export default function Login() {
     password: "",
   });
 
-//   const [captchaToken, setCaptchaToken] = useState(null);
   const [isSending, setIsSending] = useState(false);
-  const [isSent, setIsSent] = useState(false);
-  const [login, setLogin] = useState(true);
   const [alertMessage, setAlertMessage] = useState(null);
   const [alertType, setAlertType] = useState("success");
 
@@ -30,42 +24,25 @@ export default function Login() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    // console.log("token:", captchaToken);
-
-    // if (!captchaToken) {
-    //   setAlertType("error");
-    //   setAlertMessage("Please verify robot test.");
-    //   return;
-    // }
-
     setIsSending(true);
-    setIsSent(false);
 
     try {
-      // const response = await axios.post("http://localhost:5000/api/v1/admin/login", formData );
       const response = await api.post("/admin/login", formData );
         
       if (response.code === 200) {
-        setIsSent(true);
         const token = response.data.token;
-        console.log("token :", response.data.token)
         localStorage.setItem('token', token);
         navigate("/adminDashboard")
         setFormData({ userName: "" , email: "", password: "" });
-        setAlertMessage("✅ Successfully logged in.");
-        setAlertType("success");
       } else if (response.code === 404) {
-        setIsSent(false);
         setAlertMessage(response.message);
         setAlertType("error");
       }else if(response.code === 400) {
-        setIsSent(false);
         setAlertMessage(response.message);
         setAlertType("error");
       }
     } catch (error) {
       console.error(error);
-      setIsSent(false);
       setAlertMessage(String(error));
       setAlertType("error");
     } finally {
@@ -84,8 +61,6 @@ export default function Login() {
 
   return (
     <div className="flex items-center justify-center min-h-screen bg-pink-50 py-8 px-4">
-      {/* --- LOGIN FORM --- */}
-      {login && (
         <div className="w-full max-w-md bg-white/80 backdrop-blur-md rounded-2xl shadow-md p-8 border border-pink-100">
           <h2 className="text-2xl font-bold text-pink-600 mb-6">Sign in to continue</h2>
 
@@ -134,11 +109,6 @@ export default function Login() {
               </button>
             </div>
 
-            {/* <ReCAPTCHA
-              sitekey="6Lc6MNArAAAAAIhziVkoUSV4qz5FZo4cvUhsVNcM"
-              onChange={(token) => setCaptchaToken(token)}
-            /> */}
-
             <button
               type="submit"
               className="w-full mt-4 bg-pink-500 hover:bg-pink-600 text-white py-3 rounded-lg font-semibold transition-all"
@@ -148,24 +118,8 @@ export default function Login() {
             </button>
           </form>
 
-          <div className="flex justify-between mt-5 text-sm text-gray-600">
-            <button
-              onClick={() => navigate("/forgotpsw")}
-              className="hover:text-pink-500"
-            >
-              Forgot password?
-            </button>
-            {/* <button
-              onClick={signUpForm}
-              className="hover:text-pink-500 underline"
-            >
-              Sign Up
-            </button> */}
-          </div>
-
           {alertMessage && <Alert message={alertMessage} type={alertType} />}
         </div>
-      )}
     </div>
   );
 }

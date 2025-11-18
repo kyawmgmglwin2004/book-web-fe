@@ -1,7 +1,4 @@
-// api.js
 import axios from "axios";
-
-// API URL from Vite environment variable (use `VITE_ENDPOINT`), fallback to localhost
 const BASE = import.meta.env.VITE_ENDPOINT;
 const api = axios.create({
   baseURL: BASE,

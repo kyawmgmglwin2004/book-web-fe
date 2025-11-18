@@ -6,7 +6,6 @@ import { CartProvider } from "./context/CartContext.jsx";
 import OrderForm from "./pages/OrderForm.jsx";
 import Login from "./pages/Login.jsx";
 import AdminDashboard from "./pages/AdminDashboard.jsx";
-import EditBook from "./pages/EditBookModel.jsx";
 import { SearchProvider } from "./context/SearchContext.jsx";
 import { AuthProvider } from "./context/AuthContext.jsx";
 import ProtectedRoute from "./components/ProtectedRoute.jsx";
@@ -23,7 +22,6 @@ function App() {
                 <Route index element={<Home />} />
                 <Route path="addToCart" element={<AddToCart />} />
                 <Route path="order" element={<OrderForm />} />
-                <Route path="edit/:id" element={<EditBook />} />
               </Route>
 
               {/* 🔐 Admin Routes */}
