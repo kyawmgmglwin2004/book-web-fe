@@ -19,7 +19,7 @@ export default function AddBook({ onSuccess, onCancel }) {
   const [alertType, setAlertType] = useState(null);
   const fileInputRef = useRef(null);
   
-  console.log("prevew :", previews);
+  console.log("previews:", previews);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -30,8 +30,8 @@ export default function AddBook({ onSuccess, onCancel }) {
     const files = Array.from(e.target.files);
 
     setImageFiles((prev) => [...prev, ...files]);
-
-    const newPreviews = files.map(file => URL.createObjectURL(file));
+    // store preview objects with both the object URL and the original file
+    const newPreviews = files.map((file) => ({ src: URL.createObjectURL(file), file }));
     setPreviews((prev) => [...prev, ...newPreviews]);
 };
 
