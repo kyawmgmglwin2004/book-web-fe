@@ -60,9 +60,9 @@ export default function Login() {
   }, [alertMessage]);
 
   return (
-    <div className="flex items-center justify-center min-h-screen bg-pink-50 py-8 px-4">
-        <div className="w-full max-w-md bg-white/80 backdrop-blur-md rounded-2xl shadow-md p-8 border border-pink-100">
-          <h2 className="text-2xl font-bold text-pink-600 mb-6">Sign in to continue</h2>
+    <div className="flex items-center justify-center min-h-screen bg-background py-8 px-4">
+        <div className="w-full max-w-md bg-white/80 backdrop-blur-md rounded-2xl shadow-md p-8 border border-secondary">
+          <h2 className="text-2xl font-bold text-secondary mb-6">Sign in to continue</h2>
 
           <form onSubmit={handleSubmit} className="space-y-4">
 
@@ -74,7 +74,7 @@ export default function Login() {
               onChange={handleChange}
               required
               placeholder="userName"
-              className="w-full border border-pink-200 rounded-lg p-3 focus:ring-2 focus:ring-pink-400 outline-none"
+              className="w-full border border-secondary rounded-lg p-3 focus:ring-2 focus:ring-secondary outline-none"
             />
             {/* Email */}
             <input
@@ -85,7 +85,7 @@ export default function Login() {
               onChange={handleChange}
               required
               placeholder="you@example.com"
-              className="w-full border border-pink-200 rounded-lg p-3 focus:ring-2 focus:ring-pink-400 outline-none"
+              className="w-full border border-secondary rounded-lg p-3 focus:ring-2 focus:ring-secondary outline-none"
             />
 
             {/* Password */}
@@ -98,12 +98,12 @@ export default function Login() {
                 onChange={handleChange}
                 required
                 placeholder="••••••••"
-                className="w-full border border-pink-200 rounded-lg p-3 pr-12 focus:ring-2 focus:ring-pink-400 outline-none"
+                className="w-full border border-secondary rounded-lg p-3 pr-12 focus:ring-2 focus:ring-secondary outline-none"
               />
               <button
                 type="button"
                 onClick={() => setShowPassword(!showPassword)}
-                className="absolute inset-y-0 right-2 flex items-center px-2 text-sm text-pink-500 hover:text-pink-700"
+                className="absolute inset-y-0 right-2 flex items-center px-2 text-sm text-secondary hover:text-primary transition-colors"
               >
                 {showPassword ? "Hide" : "Show"}
               </button>
@@ -111,7 +111,7 @@ export default function Login() {
 
             <button
               type="submit"
-              className="w-full mt-4 bg-pink-500 hover:bg-pink-600 text-white py-3 rounded-lg font-semibold transition-all"
+              className="w-full mt-4 bg-secondary hover:bg-primary text-white py-3 rounded-lg font-semibold transition-all"
               disabled={isSending}
             >
               {isSending ? "Logging in..." : "Login"}

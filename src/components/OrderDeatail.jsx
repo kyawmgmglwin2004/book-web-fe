@@ -1,26 +1,19 @@
 import React, { useEffect, useState } from "react";
-import { useParams, useNavigate } from "react-router-dom";
-import axios from "axios";
 import api from "../api";
 
 export default function OrderDetail(id) {
-  const navigate = useNavigate();
   const [order, setOrder] = useState(null);
   const [loading, setLoading] = useState(true);
-  const token = localStorage.getItem('token')
   const odId = id.id;
-  // ✅ Fetch Order Detail
+
   useEffect(() => {
     const fetchOrder = async () => {
       try {
-            // const res = await axios.get(`http://localhost:5000/api/v1/orderList/orders/${odId}`,{
-            //   headers: {
-            // Authorization: `Bearer ${token}`, }
-            // });
+           
         const res = await api.get(`/orderList/orders/${odId}`);
 
         setOrder(res.data);
-        console.log("res ;", id) // expect { id, name, email, phone, address, total, items: [...] }
+        console.log("res ;", id) 
       } catch (err) {
         console.error("❌ Failed to fetch order:", err);
         alert("Failed to load order details.");
@@ -52,8 +45,7 @@ export default function OrderDetail(id) {
         </p>
       </div>
 
-      {/* Order Items */}
-     {/* Order Items */}
+      
 <div className="space-y-3">
   <h3 className="text-lg font-semibold mb-3 text-gray-700">📦 Order Items</h3>
   {order.items && order.items.length > 0 ? (
@@ -81,15 +73,6 @@ export default function OrderDetail(id) {
 </div>
 
 
-      {/* Buttons */}
-      {/* <div className="mt-6 flex justify-end gap-3">
-        <button
-          onClick={() => navigate(-1)}
-          className="bg-gray-300 text-gray-800 px-4 py-2 rounded hover:bg-gray-400"
-        >
-          ← Back
-        </button>
-      </div> */}
     </div>
   );
 }

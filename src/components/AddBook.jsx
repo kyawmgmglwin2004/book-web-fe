@@ -195,7 +195,7 @@ const removePreview = (index) => {
             className="w-full border p-2 rounded"
           ></textarea>
 
-          <div className="col-span-1 md:col-span-2">
+          <div className="col-span-2">
               <label className="block mb-1 text-gray-600 font-medium">
                 Book Images
               </label>

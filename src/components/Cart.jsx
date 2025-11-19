@@ -10,15 +10,15 @@ export default function Cart() {
   const total = cartBooks.reduce((sum, item) => sum + item.price * item.qty, 0);
   console.log("Cart Books:", cartBooks);
   return (
-    <div className="bg-pink-50 py-12 px-4 sm:px-6 lg:px-8 min-h-full">
+    <div className="bg-background py-12 px-4 sm:px-6 lg:px-8 min-h-full">
       <div
         className={`max-w-5xl mx-auto bg-white shadow-lg rounded-2xl overflow-hidden ${
           cartBooks.length > 3 ? "h-auto" : "h-fit"
         }`}
       >
-        <div className="px-6 py-4 border-b border-pink-200 flex justify-between items-center">
-          <h1 className="text-2xl font-bold text-pink-600">🛒 Your Cart</h1>
-          <p className="text-gray-500 text-sm">
+        <div className="px-6 py-4 border-b border-secondary flex justify-between items-center">
+          <h1 className="text-2xl font-bold text-secondary">🛒 Your Cart</h1>
+          <p className="text-secondary text-sm">
             {cartBooks.length} {cartBooks.length === 1 ? "item" : "items"}
           </p>
         </div>
@@ -37,7 +37,7 @@ export default function Cart() {
                 />
                 <div>
                   <h3 className="text-lg font-semibold">{book.title}</h3>
-                  <p className="text-pink-600 font-bold">${book.price}</p>
+                  <p className="text-secondary font-bold">${book.price}</p>
                 </div>
               </div>
 
@@ -69,16 +69,16 @@ export default function Cart() {
         </div>
 
         {cartBooks.length > 0 && (
-          <div className="p-6 bg-pink-50 border-t border-pink-200">
+          <div className="p-6 bg-background border-t border-secondary">
             <div className="flex justify-between items-center mb-4">
-              <span className="text-lg font-medium text-gray-700">Subtotal</span>
-              <span className="text-xl font-bold text-pink-600">
+              <span className="text-lg font-medium text-secondary">Subtotal</span>
+              <span className="text-xl font-bold text-secondary">
                 ${total.toFixed(2)}
               </span>
             </div>
             <button
               onClick={() => navigate("/order")}
-              className="w-full bg-pink-600 hover:bg-pink-700 text-white py-3 rounded-xl font-semibold transition-colors"
+              className="w-full bg-secondary hover:bg-primary text-white py-3 rounded-xl font-semibold transition-colors"
             >
               Proceed to Checkout
             </button>

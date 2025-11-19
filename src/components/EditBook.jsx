@@ -1,11 +1,9 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
 import Alert from "./Alert";
 import api from "../api";
 
 export default function EditBook({ id, book, onSuccess, onCancel }) {
-  const navigate = useNavigate();
   const [bookForm, setBookForm] = useState(
     book || { title: "", price: "", stock: "", remark: "", images: [] }
   );
@@ -57,7 +55,6 @@ export default function EditBook({ id, book, onSuccess, onCancel }) {
     e.target.value = null;
   };
 
-  // Drag & drop handlers
   const handleDrop = (e) => {
     e.preventDefault();
     addFiles(e.dataTransfer.files);
@@ -66,19 +63,16 @@ export default function EditBook({ id, book, onSuccess, onCancel }) {
     e.preventDefault();
   };
 
-  // Remove a preview (existing or newly added)
   const removePreview = (index) => {
     const p = previews[index];
     if (!p) return;
 
     if (p.isOld) {
-      // Remove from old images list
       setBookForm((prev) => ({
         ...prev,
         images: prev.images.filter((img) => img !== p.src),
       }));
     } else if (p.file) {
-      // Remove from new image files
       setImageFiles((prevFiles) => {
         const idx = prevFiles.findIndex(
           (f) => f.name === p.file.name && f.size === p.file.size
@@ -88,17 +82,14 @@ export default function EditBook({ id, book, onSuccess, onCancel }) {
         copy.splice(idx, 1);
         return copy;
       });
-      // revoke object URL
       try {
         URL.revokeObjectURL(p.src);
       } catch (err) {}
     }
 
-    // Remove from previews
     setPreviews((prev) => prev.filter((_, i) => i !== index));
   };
 
-  // Submit update
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
@@ -147,10 +138,10 @@ export default function EditBook({ id, book, onSuccess, onCancel }) {
   return (
     <>
       <div className="max-w-lg mx-auto mt-10 bg-white p-6 shadow-lg rounded-2xl">
-        <h2 className="text-2xl font-bold mb-4 text-pink-600">✏️ Edit Book</h2>
+        <h2 className="text-2xl font-bold mb-4 text-secondary">✏️ Edit Book</h2>
 
         <form onSubmit={handleSubmit} className="space-y-4">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div className="grid grid-cols-2 gap-4">
             {/* Title */}
             <input
               type="text"
@@ -220,7 +211,7 @@ export default function EditBook({ id, book, onSuccess, onCancel }) {
             ></textarea>
 
             {/* Image Upload */}
-            <div className="col-span-1 md:col-span-2">
+            <div className="col-span-2">
               <label className="block mb-1 text-gray-600 font-medium">
                 Book Images
               </label>
@@ -306,7 +297,7 @@ export default function EditBook({ id, book, onSuccess, onCancel }) {
               type="submit"
               disabled={loading}
               className={`${
-                loading ? "bg-pink-400" : "bg-pink-600 hover:bg-pink-700"
+                loading ? "bg-secondary" : "bg-secondary hover:bg-primary"
               } text-white px-4 py-2 rounded`}
             >
               {loading ? "Saving..." : "Save"}
