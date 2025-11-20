@@ -86,7 +86,7 @@ export default function OrderForm() {
   return (
     <div className="min-h-screen bg-background py-12 px-4 sm:px-6 lg:px-8">
       <div className="max-w-3xl mx-auto bg-white rounded-2xl shadow-md p-8">
-        <h2 className="text-2xl font-bold text-secondary mb-6">
+        <h2 className="text-2xl font-bold text-indigo-600 mb-6">
           📝 Order Information
         </h2>
 
@@ -98,7 +98,7 @@ export default function OrderForm() {
             value={formData.name}
             onChange={handleChange}
             required
-            className="w-full border border-secondary rounded-lg p-3 focus:ring-2 focus:ring-secondary text-secondary"
+            className="w-full border border-indigo-600 rounded-lg p-3 focus:ring-2 focus:ring-indigo-600 text-indigo-600"
           />
 
           <input
@@ -108,7 +108,7 @@ export default function OrderForm() {
             value={formData.email}
             onChange={handleChange}
             required
-            className="w-full border border-secondary rounded-lg p-3 focus:ring-2 focus:ring-secondary text-secondary"
+            className="w-full border border-indigo-600 rounded-lg p-3 focus:ring-2 focus:ring-indigo-600 text-indigo-600"
           />
 
           <input
@@ -118,7 +118,7 @@ export default function OrderForm() {
             value={formData.phone}
             onChange={handleChange}
             required
-            className="w-full border border-secondary rounded-lg p-3 focus:ring-2 focus:ring-secondary text-secondary"
+            className="w-full border border-indigo-600 rounded-lg p-3 focus:ring-2 focus:ring-indigo-600 text-indigo-600"
           />
 
           <textarea
@@ -128,16 +128,16 @@ export default function OrderForm() {
             onChange={handleChange}
             required
             rows="3"
-            className="w-full border border-secondary rounded-lg p-3 focus:ring-2 focus:ring-secondary text-secondary"
+            className="w-full border border-indigo-600 rounded-lg p-3 focus:ring-2 focus:ring-indigo-600 text-indigo-600"
           ></textarea>
 
           <div className="flex items-center space-x-4">
-            <label className="text-secondary font-medium">Payment:</label>
+            <label className="text-indigo-600 font-medium">Payment:</label>
             <select
               name="payment"
               value={formData.payment}
               onChange={handleChange}
-              className="border border-secondary rounded-lg p-2"
+              className="border border-indigo-600 rounded-lg p-2"
             >
               <option value="K Pay">K Pay</option>
               <option value="Wave Pay">Wave Pay</option>
@@ -146,14 +146,14 @@ export default function OrderForm() {
           </div>
 
           {/* Order Summary */}
-          <div className="border-t border-secondary mt-6 pt-6">
-            <h3 className="text-lg font-semibold text-secondary mb-3">
+          <div className="border-t border-indigo-600 mt-6 pt-6">
+            <h3 className="text-lg font-semibold text-indigo-600 mb-3">
               Order Summary
             </h3>
             {cartBooks.map((book) => (
               <div
                 key={book.id}
-                className="flex justify-between text-secondary mb-2"
+                className="flex justify-between text-indigo-600 mb-2"
               >
                 <span>
                   {book.title} x {book.qty}
@@ -161,7 +161,7 @@ export default function OrderForm() {
                 <span>${(book.price * book.qty).toFixed(2)}</span>
               </div>
             ))}
-            <div className="flex justify-between font-bold text-secondary border-t pt-2 mt-2">
+            <div className="flex justify-between font-bold text-indigo-600 border-t pt-2 mt-2">
               <span>Total:</span>
               <span>${total.toFixed(2)}</span>
             </div>
@@ -169,7 +169,7 @@ export default function OrderForm() {
 
           <button
             type="submit"
-            className="w-full mt-6 bg-secondary hover:bg-primary text-white py-3 rounded-lg font-semibold transition-all"
+            className="w-full mt-6 bg-indigo-600 hover:bg-blue-700 text-white py-3 rounded-lg font-semibold transition-all"
             disabled={isSending}
           >
             {isSending ? "Ordering..." : isSent ? "Order" : "Order"}

@@ -138,7 +138,7 @@ export default function EditBook({ id, book, onSuccess, onCancel }) {
   return (
     <>
       <div className="max-w-lg mx-auto mt-10 bg-white p-6 shadow-lg rounded-2xl">
-        <h2 className="text-2xl font-bold mb-4 text-secondary">✏️ Edit Book</h2>
+        <h2 className="text-2xl font-bold mb-4 text-indigo-600">✏️ Edit Book</h2>
 
         <form onSubmit={handleSubmit} className="space-y-4">
           <div className="grid grid-cols-2 gap-4">
@@ -219,7 +219,7 @@ export default function EditBook({ id, book, onSuccess, onCancel }) {
               <div
                 onDrop={handleDrop}
                 onDragOver={handleDragOver}
-                className="w-full border-2 border-dashed border-pink-200 rounded-lg p-4 flex flex-col items-center justify-center text-center cursor-pointer hover:border-pink-300"
+                className="w-full border-2 border-dashed border-indigo-200 rounded-lg p-4 flex flex-col items-center justify-center text-center cursor-pointer hover:border-indigo-300"
                 onClick={() =>
                   fileInputRef.current && fileInputRef.current.click()
                 }
@@ -236,7 +236,7 @@ export default function EditBook({ id, book, onSuccess, onCancel }) {
                 <div className="flex items-center gap-2">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
-                    className="h-6 w-6 text-pink-500"
+                    className="h-6 w-6 text-indigo-600"
                     fill="none"
                     viewBox="0 0 24 24"
                     stroke="currentColor"
@@ -297,7 +297,7 @@ export default function EditBook({ id, book, onSuccess, onCancel }) {
               type="submit"
               disabled={loading}
               className={`${
-                loading ? "bg-secondary" : "bg-secondary hover:bg-primary"
+                loading ? "bg-indigo-600" : "bg-indigo-600 hover:bg-indigo-700"
               } text-white px-4 py-2 rounded`}
             >
               {loading ? "Saving..." : "Save"}

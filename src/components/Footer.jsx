@@ -1,9 +1,13 @@
-// Footer.jsx
+import React from "react";
+import { useNavigate } from "react-router-dom";
+
 export default function Footer() {
+
+  const navigate = useNavigate();
   return (
     <footer className="bg-gradient-to-br from-gray-50 to-gray-100 border-t border-text-gray-500 rounded-lg">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {/* Brand / About */}
           <div>
             <h2 className="text-2xl font-bold text-text-gray-500 mb-2">📚 Bookworm Babies</h2>
@@ -17,15 +21,15 @@ export default function Footer() {
           <div>
             <h3 className="text-text-gray-500 font-semibold mb-3">Quick Links</h3>
             <ul className="space-y-2 text-sm">
-              <li><a href="#" className="text-text-gray-500 hover:text-indigo-600 transition-colors">Home</a></li>
-              <li><a href="#" className="text-text-gray-500 hover:text-indigo-600 transition-colors">Shop by Age</a></li>
-              <li><a href="#" className="text-text-gray-500 hover:text-indigo-600 transition-colors">Bestsellers</a></li>
-              <li><a href="#" className="text-text-gray-500 hover:text-indigo-600 transition-colors">About Us</a></li>
+              <li><button onClick={() => navigate("/")} className="text-text-gray-500 hover:text-indigo-600 transition-colors">Home</button></li>
+              <li><button onClick={() => navigate("/")} className="text-text-gray-500 hover:text-indigo-600 transition-colors">Shop by Age</button></li>
+              <li><button onClick={() => navigate("/")} className="text-text-gray-500 hover:text-indigo-600 transition-colors">Shop by Type</button></li>
+              <li><button onClick={() => navigate("/about")} className="text-text-gray-500 hover:text-indigo-600 transition-colors">About Us</button></li>
             </ul>
           </div>
 
           {/* Support */}
-          <div>
+          {/* <div>
             <h3 className="text-text-gray-500 font-semibold mb-3">Support</h3>
             <ul className="space-y-2 text-sm">
               <li><a href="#" className="text-text-gray-500 hover:text-indigo-600 transition-colors">FAQs</a></li>
@@ -33,7 +37,7 @@ export default function Footer() {
               <li><a href="#" className="text-text-gray-500 hover:text-indigo-600 transition-colors">Privacy Policy</a></li>
               <li><a href="#" className="text-text-gray-500 hover:text-indigo-600 transition-colors">Contact Us</a></li>
             </ul>
-          </div>
+          </div> */}
 
           {/* Newsletter */}
           <div>
@@ -49,7 +53,7 @@ export default function Footer() {
               />
               <button
                 type="submit"
-                className="bg-indigo-600 hover:bg-indigo-800 text-white px-4 py-2 rounded-lg text-sm transition-colors"
+                className="bg-indigo-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg text-sm transition-colors"
               >
                 Subscribe
               </button>

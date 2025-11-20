@@ -7,6 +7,61 @@
   text-align: center;
 }
 
+.slick-prev,
+.slick-next {
+  width: 48px;
+  height: 48px;
+  background-color: rgba(255, 255, 255, 0.8);
+  border-radius: 50%;
+  z-index: 10;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+.slick-prev:hover,
+.slick-next:hover {
+  background-color: #ffffff;
+  transform: scale(1.1);
+}
+
+.slick-prev:before,
+.slick-next:before {
+  font-family: 'slick';
+  font-size: 24px;
+  color: #4f46e5; /* Indigo-600 */
+}
+
+.slick-prev {
+  left: 10px;
+}
+
+.slick-next {
+  right: 10px;
+}
+
+/* Custom Dots for react-slick */
+.slick-dots {
+  bottom: 15px;
+}
+
+.slick-dots li button:before {
+  color: white;
+  opacity: 0.5;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  border: 2px solid white;
+  background-color: transparent;
+  transition: all 0.3s ease;
+  content: '';
+}
+
+.slick-dots li.slick-active button:before {
+  opacity: 1;
+  background-color: white;
+  transform: scale(1.2);
+}
+
 .logo {
   height: 6em;
   padding: 1.5em;

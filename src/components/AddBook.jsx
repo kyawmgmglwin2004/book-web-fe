@@ -134,7 +134,7 @@ const removePreview = (index) => {
   return (
     <>
       <form onSubmit={handleSubmit} className="space-y-4">
-        <h2 className="text-2xl font-bold text-pink-600 mb-2">Add New Book</h2>
+        <h2 className="text-2xl font-bold text-indigo-600 mb-2">Add New Book</h2>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <input
@@ -203,7 +203,7 @@ const removePreview = (index) => {
               <div
                 onDrop={handleDrop}
                 onDragOver={handleDragOver}
-                className="w-full border-2 border-dashed border-pink-200 rounded-lg p-4 flex flex-col items-center justify-center text-center cursor-pointer hover:border-pink-300"
+                className="w-full border-2 border-dashed border-blue-200 rounded-lg p-4 flex flex-col items-center justify-center text-center cursor-pointer hover:border-blue-300"
                 onClick={() =>
                   fileInputRef.current && fileInputRef.current.click()
                 }
@@ -220,7 +220,7 @@ const removePreview = (index) => {
                 <div className="flex items-center gap-2">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
-                    className="h-6 w-6 text-pink-500"
+                    className="h-6 w-6 text-indigo-600"
                     fill="none"
                     viewBox="0 0 24 24"
                     stroke="currentColor"
@@ -236,9 +236,9 @@ const removePreview = (index) => {
                     <div className="text-sm font-medium text-gray-700">
                       Click or drag images to upload
                     </div>
-                    <div className="text-xs text-gray-400">
+                    {/* <div className="text-xs text-gray-400">
                       PNG, JPG up to your server limits — multiple allowed
-                    </div>
+                    </div> */}
                   </div>
                 </div>
               </div>
@@ -278,7 +278,7 @@ const removePreview = (index) => {
             <button
               type="submit"
               disabled={loading}
-              className={`${loading ? "bg-pink-400" : "bg-pink-600 hover:bg-pink-700"} text-white px-4 py-2 rounded`}
+              className={`${loading ? "bg-indigo-400" : "bg-indigo-600 hover:bg-indigo-700"} text-white px-4 py-2 rounded`}
             >
               {loading ? "Saving..." : "Add Book"}
             </button>
