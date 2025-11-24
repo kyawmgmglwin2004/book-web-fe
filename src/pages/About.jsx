@@ -314,7 +314,7 @@ export default function About() {
                   <Mail className="text-indigo-600 group-hover:text-white transition-colors" size={28} />
                 </div>
                 <h3 className="text-xl font-semibold text-gray-800 mb-2">Email Us</h3>
-                <p className="text-gray-600">hello@bookstore.com</p>
+                <p className="text-gray-600">kyawmgmglwin146018@gmail.com</p>
               </div>
             </motion.a>
             
@@ -328,7 +328,7 @@ export default function About() {
                   <Phone className="text-indigo-600 group-hover:text-white transition-colors" size={28} />
                 </div>
                 <h3 className="text-xl font-semibold text-gray-800 mb-2">Call Us</h3>
-                <p className="text-gray-600">1-800-BOOKS</p>
+                <p className="text-gray-600">09796582826</p>
               </div>
             </motion.a>
             
@@ -342,7 +342,7 @@ export default function About() {
                   <MapPin className="text-indigo-600 group-hover:text-white transition-colors" size={28} />
                 </div>
                 <h3 className="text-xl font-semibold text-gray-800 mb-2">Visit Us</h3>
-                <p className="text-gray-600">123 Book Street, Reading City</p>
+                <p className="text-gray-600">NO-5, ThatyetTaw Street, Yangon City</p>
               </div>
             </motion.a>
           </div>

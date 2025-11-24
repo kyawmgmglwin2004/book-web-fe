@@ -79,7 +79,7 @@ export default function Header() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">
             <div className="flex-shrink-0">
-              <Link to="/" onClick={handleNavigationClick} className="text-2xl font-bold text-indigo-600">StoryNook</Link>
+              <Link to="/" onClick={handleNavigationClick} className="text-2xl font-bold text-indigo-600">Bookworm Babies</Link>
             </div>
 
             {/* Desktop Navigation */}
